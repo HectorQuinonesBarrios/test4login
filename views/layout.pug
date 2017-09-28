@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= title
+    block head
+      link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.css')
+      link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap-theme.css')
+      link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+
+    block script
+      script(src='/jquery/dist/jquery.js' type='text/javascript')
