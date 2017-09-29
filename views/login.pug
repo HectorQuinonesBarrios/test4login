@@ -1,22 +1,26 @@
 extends layout
+block append head
+  link(rel='stylesheet', href='/stylesheets/login.css')
 block content
-  .wrapper
-    .container
-      h1 Welcome
-      form.form
-        input(type='text', placeholder='Username')
-        input(type='password', placeholder='Password')
-        button#login-button(type='submit') Login
-    ul.bg-bubbles
-      li
-      li
-      li
-      li
-      li
-      li
-      li
-      li
-      li
-      li
-  block append script
-    script(src='/javascripts/login.js' type='text/javascript')
+  .login-page
+  .form
+    form.register-form(action='/register' method='POST')
+      input(type='text', name='nombre', placeholder='Nombre', required='required')
+      input(type='email',name='email', placeholder='Email', required='required')
+      input(type='password',name='password', placeholder='Contraseña', required='required')
+
+      button(type='submit') Crear
+      p.message
+        | Ya estas registrado?
+        a(href='#') Inicia sesion
+    form.login-form(action='/login' method='POST')
+      input(type='text', name='email', placeholder='Email',required='required')
+      input(type='password', name='password', placeholder='Contraseña', required='required')
+      button(type='submit') login
+      p.message
+        | No registrado?
+        a(href='#') Crea una cuenta
+
+block append script
+  script(src='/jquery/dist/jquery.js' type='text/javascript')
+  script(src='/javascripts/login.js' type='text/javascript')

@@ -1,6 +1,3 @@
-$("#login-button").click(function(event){
-    event.preventDefault();
-
-  $('form').fadeOut(500);
-  $('.wrapper').addClass('form-success');
+$('.message a').click(function(){
+   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
