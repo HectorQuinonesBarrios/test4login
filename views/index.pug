@@ -1,7 +1,8 @@
-extends layout
+extends ./layout
 
 block content
   h1 Bienvenido
   p #{nombre}
   form(action='/logout' method='POST')
     button(type='submit' class='btn btn-primary') Logout
+    a.btn.btn-success(href="/users") Ver usuarios

@@ -47,7 +47,7 @@ function log(req, res, next) {
 }
 
 function register(req, res, next) {
-  console.log(req.body);
+  console.log("test",req.body);
     usr = new Usuario({
         nombre : req.body.nombre,
         email : req.body.email,
@@ -66,6 +66,7 @@ function register(req, res, next) {
             code,
             message
         };
+        console.log("SUCCESS");
         res.redirect("/");
     });
 }
@@ -75,11 +76,28 @@ function logout(req, res, next) {
     else res.redirect('/login');
   });
 }
+function users(req,res,next){
+  Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    if (!usuario) {
+        res.render('login');
+    } else {
+      Usuario.find((err, usuarios)=>{
+        console.log(usuario);
+        if(err){
+          throw err;
+        } else {
+          res.render("users", {usuarios: usuarios});
+        }
+      });
+    }
+  });
 
+}
 module.exports = {
     index,
     login,
     log,
     register,
-    logout
+    logout,
+    users
 }

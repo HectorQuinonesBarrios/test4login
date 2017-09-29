@@ -8,5 +8,5 @@ router.get('/login', indexController.login);
 router.post('/login', indexController.log);
 router.post('/register', indexController.register);
 router.post('/logout', indexController.logout);
-
+router.get('/users', indexController.users);
 module.exports = router;
