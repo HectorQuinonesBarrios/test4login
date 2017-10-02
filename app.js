@@ -6,6 +6,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const stylus = require('stylus');
 const session = require('express-session')
+const log4js = require('log4js');
+const http = require('http');
+const debug = require('debug')('login:server');
+const mongoose = require('mongoose');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -13,12 +17,27 @@ const users = require('./routes/users');
 const app = express();
 const server = require('http').Server(app);
 
+var port = normalizePort(process.env.PORT || '3000');
+
+//DB
+mongoose.connect('mongodb://localhost:27017/login',{useMongoClient: true, promiseLibrary: global.Promise }, (err, res)=>{
+ if(err){
+   throw err;
+ }else{
+   server.listen(port, ()=>{
+   });
+ }
+});
+server.on('error', onError);
+server.on('listening', onListening);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
+
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -56,4 +75,55 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = {app: app, server: server};
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+module.exports = app;

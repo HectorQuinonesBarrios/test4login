@@ -57,7 +57,6 @@ function register(req, res, next) {
         if (err) {
             code = 'danger';
             message = 'Error al crear el usuario';
-            logger.debug(err)
         } else {
             code = 'success';
             message = 'Usuario creado correctamente';

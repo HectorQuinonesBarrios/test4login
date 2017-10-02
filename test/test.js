@@ -1,9 +1,10 @@
-let assert = require('assert');
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../app').server;
-let Usuarios = require('../models/user');
-let should = chai.should();
+const assert = require('chai').assert;
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../app');
+const Usuarios = require('../models/user');
+const should = require('chai').should();
+const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Login', function() {
@@ -19,7 +20,10 @@ describe('Login', function() {
     .end((err, res)=>{
       if(err)
         throw err;
-      res.should.be(true);
+      console.log(res.statusCode);
+      expect(res.statusCode).to.equal(200);
+
+
       done();
     });
   });
@@ -32,7 +36,7 @@ describe('Login', function() {
     .post('/register')
     .send(user)
     .end((err, res)=>{
-      res.should.be(true);
+      expect(res.ok).to.be.equal(true);
       done();
     });
   });
@@ -45,7 +49,7 @@ describe('Login', function() {
     .post('/login')
     .send(user)
     .end((err, res)=>{
-      res.should.be(true);
+      expect(res.ok).to.be.equal(true);
       done();
     });
   });
@@ -53,7 +57,7 @@ describe('Login', function() {
     chai.request(server)
     .get('/users')
     .end((err, res)=>{
-      res.should.be(true);
+      expect(res.ok).to.be.equal(true);
       done();
     });
   });
@@ -66,7 +70,7 @@ describe('Login', function() {
     .post('/login')
     .send(user)
     .end((err, res)=>{
-      res.should.be(true);
+      expect(res.ok).to.be.equal(true);
       done();
     });
   });
@@ -74,8 +78,8 @@ describe('Login', function() {
     chai.request(server)
     .get('/users')
     .end((err, res)=>{
-      res.should.be(true);
+      expect(res.ok).to.be.equal(true);
       done();
     });
   });
-  });
+});
