@@ -1,10 +1,14 @@
 const assert = require('chai').assert;
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../app');
-const Usuarios = require('../models/user');
 const should = require('chai').should();
 const expect = chai.expect;
+const server = require('../app');
+const Usuarios = require('../models/user');
+const sinon = require('sinon');
+const ExpressBrute = require('express-brute');
+const store = new ExpressBrute.MemoryStore();
+const bruteforce = new ExpressBrute(store);
 chai.use(chaiHttp);
 
 describe('Login', function() {
@@ -40,19 +44,6 @@ describe('Login', function() {
       done();
     });
   });
-  it('No deberia dejar loggear sin las credenciales correctas',(done)=>{
-    let user = {
-        email: "kek@kek",
-        password: "kk"
-    }
-    chai.request(server)
-    .post('/login')
-    .send(user)
-    .end((err, res)=>{
-      expect(res.ok).to.be.equal(true);
-      done();
-    });
-  });
   it('No deberia ver los usuarios sin estar loggeado',(done)=>{
     chai.request(server)
     .get('/users')
@@ -81,5 +72,24 @@ describe('Login', function() {
       expect(res.ok).to.be.equal(true);
       done();
     });
+  });
+  it('El mockito usando sinonJS',(done)=>{
+    let testAPI = {
+      method: function(){
+
+
+      return bruteforce.prevent;
+
+      }
+    };
+    let mock = sinon.mock(testAPI);
+    mock.expects("method").twice().atMost(3);
+    for(let i=0; i<2; i++){
+      testAPI.method();
+    }
+
+
+    mock.verify();
+    done();
   });
 });
