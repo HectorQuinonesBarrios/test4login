@@ -24,4 +24,9 @@ Para ejecutar el servidor dentro de la carpeta raiz del proyecto, seguir los sig
 ````
 npm start
 ````
+## Pruebas
+Para ver que las pruebas se ejecutaron usar el siguiente comando en la carpeta raiz del proyecto:
+````
+npm test
+````
 Nota : hay que tener instalado MongoDB y estar prendido
