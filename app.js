@@ -10,7 +10,7 @@ const log4js = require('log4js');
 const http = require('http');
 const debug = require('debug')('login:server');
 const mongoose = require('mongoose');
-
+const config = require('./test/_config.js');
 const index = require('./routes/index');
 const users = require('./routes/users');
 
@@ -20,11 +20,12 @@ const server = require('http').Server(app);
 var port = normalizePort(process.env.PORT || '3000');
 
 //DB
-mongoose.connect('mongodb://localhost:27017/login',{useMongoClient: true, promiseLibrary: global.Promise }, (err, res)=>{
+mongoose.connect(config.mongoURI[app.settings.env],{useMongoClient: true, promiseLibrary: global.Promise }, (err, res)=>{
  if(err){
    throw err;
  }else{
    server.listen(port, ()=>{
+     console.log("usando", app.settings.env);
    });
  }
 });
