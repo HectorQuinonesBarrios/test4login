@@ -1,5 +1,8 @@
 extends ./layout
 block content
-  ul
-    each usuario in usuarios
+  ul#test
+  //  each usuario in usuarios
       li= usuario.nombre
+block append script
+  script(src='/javascripts/iterator.js')
+  script(src='/javascripts/iteratorObject.js')
